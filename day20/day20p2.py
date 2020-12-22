@@ -257,11 +257,19 @@ if __name__ == '__main__':
             print()
         print('-'*120)
 
+    for row in matrix:
+        for t in row:
+            print(' '.join(t.name), end='|')
+        print('-'*120)
+
+    def printmatrix(m):
+        for row in m:
+            print(''.join(row))
 
     newmatrix = []
     for row in matrix:
-        for e in range(10):
-            newmatrix.append(list(''.join(t._fdata[e]) for t in row))
+        for e in range(1, 9):
+            newmatrix.append(list(''.join((''.join(t._fdata[e][1:9]) for t in row))))
 
     fullmatrix = deepcopy(newmatrix)
     for row in newmatrix:
@@ -273,21 +281,23 @@ if __name__ == '__main__':
 ' #  #  #  #  #  #   '
 ]
 
-    def getpos(matrix, pos):
+    def getpos(m, pos):
         try:
-            matrix[pos[1]][pos[0]]
+            return m[pos[1]][pos[0]]
         except IndexError:
-            return '.'
+            return 'X'
 
-    def setpos(matrix, pos, c):
-        matrix[pos[1]][pos[0]] = c
+    def setpos(m, pos, c):
+        m[pos[1]][pos[0]] = c
 
     def intersect_monster(matrix, pos):
         for y, mr in enumerate(monster):
             for x, mv in enumerate(mr):
                 mpos = addpos((x, y), pos)
-                if mv == '#' and getpos(matrix, mpos) != '#':
-                    return False
+                if mv == '#':
+                    print(getpos(matrix, mpos), end='')
+                    if getpos(matrix, mpos) != '#':
+                       return False
         print("FOUND MONSTER")
         return True
 
@@ -300,7 +310,9 @@ if __name__ == '__main__':
 
     cnt = 0
     for flip in (-1, 1):
-        for rotate in range(4):
+        for rotate in range(4): 
+            print()
+            printmatrix(newmatrix)
             for y in range(len(newmatrix)):
                 for x in range(len(newmatrix)):
                     if intersect_monster(newmatrix, (x, y)):
