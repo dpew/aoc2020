@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env pypy3
 
 import sys
 import math
@@ -97,7 +97,7 @@ if __name__ == '__main__':
     c = 0
     while True:
         print(c)
-        print_seats(seats)        
+        #print_seats(seats)        
         
         c2, seats = process_seats(seats)
         if c == c2:
