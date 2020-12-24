@@ -66,7 +66,11 @@ def subpos(p1, p2):
     return addpos(p1, invertpos(p2))
 
 def mulpos(v, p):
-    return mapvector(lambda x: v * x, p)
+    '''
+       >>> mulpos((0, 1, 2, 3), 2)
+       (0, 2, 4, 6)
+    '''
+    return mapvector(lambda x: p * x, v)
 
 def mintuple(t1, t2):
     '''
@@ -110,19 +114,43 @@ def rotate2(vector, angle):
     '''
         Rotate a two dimensional vector clockwise.  UP is (0, -1), LEFT = (-1, 0)
 
-        >>> rotate((1, 0), -90)
+        >>> rotate2((1, 0), -90)
         (0, -1)
-        >>> rotate((1, 0), 90)
+        >>> rotate2((1, 0), 90)
         (0, 1)
-        >>> rotate((0, 1), -90)
+        >>> rotate2((0, 1), -90)
         (1, 0)
-        >>> rotate((0, 1), 90)
+        >>> rotate2((0, 1), 90)
         (-1, 0)
     '''
     c = int(math.cos(math.radians(angle)))
     s = int(math.sin(math.radians(angle)))
     return (vector[0] * c - vector[1] * s, vector[0] * s + vector[1] * c)
 
+def rotate_matrix(matrix):
+    '''
+        Rotates the given two dimensional array (matrix) 90 clockwise.
+
+        >>> [ ''.join(x) for x in rotate_matrix(['123', '456', '789', 'abc'])]
+        ['a741', 'b852', 'c963']
+        >>> [ ''.join(x) for x in rotate_matrix(['ab', 'cd'])]
+        ['ca', 'db']
+    '''
+    result = []
+    for x in range(len(matrix[0])):
+         result.append([row[x] for row in reversed(matrix)])
+    return result
+
+def flip_matrix(matrix):
+    '''
+        Flips the given two dimensional array (matrix) along the x axis
+
+        >>> [ ''.join(x) for x in flip_matrix(['123', '456', '789', 'abc'])]
+        ['321', '654', '987', 'cba']
+        >>> [ ''.join(x) for x in flip_matrix(['ab', 'cd'])]
+        ['ba', 'dc']
+    '''
+    return [row[::-1] for row in matrix]
 
 def minmax(*positions):
     '''
